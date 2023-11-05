@@ -28,10 +28,17 @@ To run this program every day at midnight, you can use a cron job. Here are the 
 
 This cron job will run the Python script every day at midnight. The `0 0 * * *` syntax represents minutes (0), hours (0), day of the month (*), month (*), and day of the week (*), respectively. The asterisks (*) mean "every". So `0 0 * * *` means "at 0 minutes past 0 hours, every day of the month, every month, and every day of the week", which is equivalent to "every day at midnight". The `/usr/bin/python3` is the path to the Python interpreter. Make sure to replace it with the path to the Python interpreter on your system if it's located elsewhere. The `/path/to/your/script.py` is the path to the Python script that you want to run. Replace it with the actual path to your script. 
 
-Please note that the cron daemon must be running for the cron jobs to work. If it's not already running, you can start it with the command `service cron start`. You may need to use `sudo` if you get a permission error, like so: `sudo service cron start`. 
+## Tracker Log Demonstration
+The log file provides a daily record of changes in the S&P 500 constituent list. Each entry in the log file contains the following information:
 
-Also, please note that the Python script must have the necessary permissions to be executed. You can add execute permissions to the script with the command `chmod +x /path/to/your/script.py`. Again, replace `/path/to/your/script.py` with the actual path to your script. 
+Timestamp: The date and time when the comparison was made, formatted as MM/DD/YYYY HH:MM:SS AM/PM.
+Quarter Update: A boolean value indicating whether the update is a quarterly update. False signifies a non-quarterly update.
+List Compared: The filename of the S&P 500 constituent list used for comparison.
+Changes to the Constituent List: A boolean value indicating whether there were any changes in the constituent list. Yes signifies that changes were detected.
+Added: A set of ticker symbols representing companies added to the S&P 500.
+Removed: A set of ticker symbols representing companies removed from the S&P 500.
+For example, an entry might look like this:
+![log_demonstration](https://github.com/lauchunhin/AutoTracker-snp500/blob/main/cron_log.png)
 
-Lastly, please note that the cron job will run in a minimal environment, so it might not have access to the same paths and variables as your regular terminal session. If your script depends on certain environment variables, you might need to define them in the crontab file or in the script itself. If your script depends on certain modules, you might need to provide the full path to the Python interpreter that has access to those modules. 
 
-If you encounter any issues, you can check the cron logs for any error messages. The location of the cron logs depends on your system. On many systems, the cron logs are located at `/var/log/syslog`. You can view the cron-related lines with the command `grep CRON /var/log/syslog`. If the cron logs are not located at `/var/log/syslog` on your system, you might need to check the `/var/log/cron` file or the `/var/log/messages` file, or use the command `journalctl -u cron`. 
+This log file serves as a concise and clear record of the daily changes in the S&P 500 constituent list, providing valuable insights into the dynamics of the index over time. It is an essential tool for financial programmers and analysts tracking the S&P 500.
